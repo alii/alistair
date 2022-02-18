@@ -20,7 +20,7 @@ id (e.g. an application invite code).
 #### Declarations:
 
 ```ts
-declare function id(length?: string, alphabet?: string): string;
+declare function id(length?: number, alphabet?: string): string;
 ```
 
 #### Example usage:

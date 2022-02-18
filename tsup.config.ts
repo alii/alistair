@@ -6,4 +6,8 @@ export default defineConfig({
 	clean: true,
 	format: ['cjs', 'esm'],
 	dts: true,
+
+	banner: {
+		js: '// Copyright Alistair Smith https://github.com/alii/alistair',
+	},
 });

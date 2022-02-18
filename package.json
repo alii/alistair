@@ -1,0 +1,9 @@
+{
+  "name": "alistair",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/alii/alistair",
+  "author": "Alistair Smith <hi@alistair.sh>",
+  "license": "MIT",
+  "packageManager": "yarn@3.1.1"
+}

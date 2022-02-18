@@ -8,6 +8,12 @@
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
 	"packageManager": "yarn@3.1.1",
+	"files": [
+		"README.md",
+		"LICENSE",
+		"dist",
+		"package.json"
+	],
 	"scripts": {
 		"build": "tsup src/index.ts --format cjs,esm --dts"
 	},

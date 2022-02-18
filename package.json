@@ -16,10 +16,11 @@
 		"LICENSE",
 		"dist",
 		"prettier",
-		"package.json"
+		"package.json",
+		"id"
 	],
 	"scripts": {
-		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"build": "tsup",
 		"release": "yarn build && yarn npm publish"
 	},
 	"devDependencies": {

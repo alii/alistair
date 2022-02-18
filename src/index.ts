@@ -1,3 +1,5 @@
-export function id() {
-	return Math.random().toString(36).substr(2, 9);
-}
+throw new Error(
+	'Do not import `alistair` directly, use the submodules (like alistair/id)',
+);
+
+export {};

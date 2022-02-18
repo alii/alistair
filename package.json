@@ -1,6 +1,6 @@
 {
 	"name": "alistair",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
@@ -19,7 +19,8 @@
 		"package.json"
 	],
 	"scripts": {
-		"build": "tsup src/index.ts --format cjs,esm --dts"
+		"build": "tsup src/index.ts --format cjs,esm --dts",
+		"release": "yarn build && yarn npm publish"
 	},
 	"devDependencies": {
 		"tsup": "^5.11.13",

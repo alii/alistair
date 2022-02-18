@@ -1,9 +1,18 @@
 {
-  "name": "alistair",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/alii/alistair",
-  "author": "Alistair Smith <hi@alistair.sh>",
-  "license": "MIT",
-  "packageManager": "yarn@3.1.1"
+	"name": "alistair",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"repository": "https://github.com/alii/alistair",
+	"author": "Alistair Smith <hi@alistair.sh>",
+	"license": "MIT",
+	"packageManager": "yarn@3.1.1",
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts"
+	},
+	"devDependencies": {
+		"tsup": "^5.11.13",
+		"typescript": "^4.5.5"
+	}
 }

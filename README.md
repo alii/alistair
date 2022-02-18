@@ -2,4 +2,4 @@
 
 # alistair
 
-A collection of utility functions to share across projects
+A collection of utility functions to share across projects.

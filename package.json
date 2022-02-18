@@ -17,14 +17,19 @@
 		"dist",
 		"prettier",
 		"package.json",
-		"id"
+		"id",
+		"hooks"
 	],
 	"scripts": {
 		"build": "tsup",
 		"release": "yarn build && yarn npm publish"
 	},
 	"devDependencies": {
+		"@types/react": "^17.0.39",
 		"tsup": "^5.11.13",
 		"typescript": "^4.5.5"
+	},
+	"peerDependencies": {
+		"react": "*"
 	}
 }

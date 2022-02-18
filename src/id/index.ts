@@ -7,7 +7,7 @@ export function id(
 	length = 20,
 	alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
 ): string {
-	return [...new Array(length)].reduce<string>(
+	return [...new Array<never>(length)].reduce(
 		str => str + alphabet.charAt(Math.floor(Math.random() * alphabet.length)),
 		'',
 	);

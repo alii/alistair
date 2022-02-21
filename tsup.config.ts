@@ -5,6 +5,7 @@ export default defineConfig({
 		'src/id/index.ts',
 		'src/prettier/index.json',
 		'src/hooks/index.ts',
+		'src/api-client/index.ts',
 		'src/index.ts',
 	],
 	splitting: true,

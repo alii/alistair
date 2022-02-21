@@ -18,7 +18,8 @@
 		"prettier",
 		"package.json",
 		"id",
-		"hooks"
+		"hooks",
+		"api-client"
 	],
 	"scripts": {
 		"build": "tsup",
@@ -31,5 +32,8 @@
 	},
 	"peerDependencies": {
 		"react": "*"
+	},
+	"dependencies": {
+		"urlcat": "^2.0.4"
 	}
 }

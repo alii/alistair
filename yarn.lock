@@ -135,6 +135,7 @@ __metadata:
     "@types/react": ^17.0.39
     tsup: ^5.11.13
     typescript: ^4.5.5
+    urlcat: ^2.0.4
   peerDependencies:
     react: "*"
   languageName: unknown
@@ -1684,6 +1685,13 @@ __metadata:
   dependencies:
     imurmurhash: ^0.1.4
   checksum: 5b6876a645da08d505dedb970d1571f6cebdf87044cb6b740c8dbb24f0d6e1dc8bdbf46825fd09f994d7cf50760e6f6e063cfa197d51c5902c00a861702eb75a
+  languageName: node
+  linkType: hard
+
+"urlcat@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "urlcat@npm:2.0.4"
+  checksum: 9f09c87fc565445e0e79ac1c1e0c79526dff2b1bcd48a6c60c079f6b8ca32f54414721f94078ce18a433582762ef12da9306519beaf9b776864cd1a8057c535c
   languageName: node
   linkType: hard
 

@@ -41,7 +41,19 @@ A collection of pure utility React hooks that may be useful in your projects.
 #### Declarations:
 
 ```ts
-declare function useThrottle<T>(value: T, limit?: number): T;
+// use-throttle
+function useThrottle<T>(value: T, limit?: number): T;
+
+// use-toggle
+function useToggle(initialState?: boolean): readonly [
+	boolean,
+	{
+		readonly on: () => void;
+		readonly off: () => void;
+		readonly toggle: () => void;
+		readonly reset: () => void;
+	},
+];
 ```
 
 ---

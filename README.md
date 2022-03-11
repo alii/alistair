@@ -54,6 +54,9 @@ function useToggle(initialState?: boolean): readonly [
 		readonly reset: () => void;
 	},
 ];
+
+// use-lazy-ref
+function useLazyRef<T>(init: () => T): T;
 ```
 
 ---

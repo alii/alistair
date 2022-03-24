@@ -4,3 +4,4 @@ dist
 .yarn/*
 !.yarn/releases
 node_modules
+.DS_Store

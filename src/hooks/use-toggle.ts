@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 
 /**
  * Store a toggle boolean state with utility methods
@@ -12,18 +12,10 @@ export function useToggle(initialState = false) {
 	const [state, setState] = useState(initialState);
 
 	const handlers = {
-		on() {
-			setState(true);
-		},
-		off() {
-			setState(false);
-		},
-		toggle() {
-			setState(s => !s);
-		},
-		reset() {
-			setState(initialState);
-		},
+		on: useCallback(() => setState(true), []),
+		off: useCallback(() => setState(false), []),
+		toggle: useCallback(() => setState(!state), [state]),
+		reset: useCallback(() => setState(initialState), [initialState]),
 	} as const;
 
 	return [state, handlers] as const;

@@ -1,4 +1,4 @@
-import urlcat from 'urlcat';
+import {default as urlcat} from 'urlcat';
 
 export type Method = 'post' | 'patch' | 'put' | 'get' | 'delete';
 export type InitFetcher = (url: string, method: Method) => RequestInit;

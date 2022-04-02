@@ -22,8 +22,8 @@ export interface Config<P extends string, Q extends string[]> {
 export type RunArgs<P extends string, Q extends string[]> = [
 	GetURLParams<P> | Q[number],
 ] extends [never]
-	? []
-	: [params: Record<GetURLParams<P> | Q[number], string>];
+	? [init?: RequestInit]
+	: [params: Record<GetURLParams<P> | Q[number], string>, init?: RequestInit];
 
 export class Endpoint<P extends string, Q extends string[]> {
 	private readonly config: Config<P, Q>;
@@ -39,10 +39,11 @@ export class Endpoint<P extends string, Q extends string[]> {
 		});
 	}
 
-	async run(...[params]: RunArgs<P, Q>) {
-		const url = urlcat(this.config.path, params ?? {});
+	async run(...[paramsOrInit = {}, init = {}]: RunArgs<P, Q>) {
+		const url = urlcat(this.config.path, paramsOrInit ?? {});
 
 		return fetch(url, {
+			...init,
 			method: this.config.method,
 			...(this.config.init?.(this.config.path, this.config.method) ?? {}),
 		});

@@ -1,25 +1,18 @@
 {
 	"name": "alistair",
-	"version": "1.5.1",
+	"version": "1.5.2",
 	"repository": "https://github.com/alii/alistair",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
-	"packageManager": "yarn@4.0.0",
 	"sideEffects": false,
 	"type": "module",
-	"keywords": [
-		"utilities",
-		"react",
-		"hooks",
-		"focused",
-		"localstorage",
-		"prettier",
-		"formatting",
-		"id"
-	],
-	"publishConfig": {
-		"access": "public"
+	"scripts": {
+		"build": "tsup",
+		"release": "yarn build && yarn npm publish"
 	},
+	"types": "./dist/index.d.cts",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
 	"exports": {
 		"./package.json": "./package.json",
 		"./prettier": "./prettier/index.json",
@@ -43,10 +36,6 @@
 		"prettier",
 		"package.json"
 	],
-	"scripts": {
-		"build": "tsup",
-		"release": "yarn build && yarn npm publish"
-	},
 	"devDependencies": {
 		"@types/react": "^18.2.31",
 		"tsup": "^7.2.0",
@@ -54,5 +43,19 @@
 	},
 	"peerDependencies": {
 		"react": "*"
-	}
+	},
+	"keywords": [
+		"utilities",
+		"react",
+		"hooks",
+		"focused",
+		"localstorage",
+		"prettier",
+		"formatting",
+		"id"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"packageManager": "yarn@4.0.0"
 }

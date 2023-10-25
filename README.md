@@ -27,37 +27,40 @@ declare function id(length?: number, alphabet?: string): string;
 
 ```ts
 import {id} from 'alistair/id';
+
 const randomId = id();
+const randomHex = id(6, 'abcdefg01234567890');
+const randomCode = id(10);
 ```
 
 ---
 
 ### `alistair/hooks`:
 
-A collection of pure utility React hooks that may be useful in your projects.
-
-#### Declarations:
+A collection of pure utility React hooks that may be useful in your projects. There is no documentation for these right now, but they should all have JSDoc, so if you want to learn more, you can find the file [here](https://github.com/alii/alistair/tree/master/src/hooks).
 
 ```ts
-// use-local-storage
-function useLocalStorage<T>(key: string, init: () => T): [value: T, set: (action: React.SetStateAction<T>) => void];
+export function useLocalStorage<T>(key: string, init: () => T): [value: T, set: (action: React.SetStateAction<T>) => void];
 
-// use-throttle
-function useThrottle<T>(value: T, limit?: number): T;
+export function useThrottle<T>(value: T, ms?: number): T;
 
-// use-toggle
-function useToggle(
+export function useToggle(
 	initialState?: boolean,
 ) [
 	enabled: boolean,
 	control: {on: () => void; off: () => void; toggle: () => void; reset: () => void},
 ];
 
-// use-is-tab-focused
-function useIsTabFocused(): boolean;
+export function useIsTabFocused(): boolean;
 
-// use-lazy-ref
-function useLazyRef<T>(init: () => T): T;
+export function useLazyRef<T>(init: () => T): T;
+
+export function useLazyRef<T>(init: () => T): T;
+
+export function useInterval(fn: () => void, interval: number): void;
+
+// Based on https://github.com/reactjs/rfcs/blob/useevent/text/0000-useevent.md
+export function useEvent<A extends unknown[], R>(fn: (...args: A) => R): (...args: A) => R;
 ```
 
 ---

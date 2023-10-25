@@ -1,39 +1,58 @@
 {
 	"name": "alistair",
-	"version": "1.4.2",
-	"main": "dist/index.js",
-	"module": "dist/index.mjs",
-	"types": "dist/index.d.ts",
+	"version": "1.5.0",
 	"repository": "https://github.com/alii/alistair",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
-	"packageManager": "yarn@3.1.1",
+	"packageManager": "yarn@4.0.0",
+	"sideEffects": false,
+	"type": "module",
+	"keywords": [
+		"utilities",
+		"react",
+		"hooks",
+		"focused",
+		"localstorage",
+		"prettier",
+		"formatting",
+		"id"
+	],
 	"publishConfig": {
 		"access": "public"
+	},
+	"exports": {
+		"./package.json": "./package.json",
+		"./prettier": "./prettier/index.json",
+		".": {
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./id": {
+			"import": "./dist/id/index.js",
+			"require": "./dist/id/index.cjs"
+		},
+		"./hooks": {
+			"import": "./dist/hooks/index.js",
+			"require": "./dist/hooks/index.cjs"
+		}
 	},
 	"files": [
 		"README.md",
 		"LICENSE",
 		"dist",
 		"prettier",
-		"package.json",
-		"id",
-		"hooks",
-		"api-client"
+		"package.json"
 	],
 	"scripts": {
 		"build": "tsup",
 		"release": "yarn build && yarn npm publish"
 	},
 	"devDependencies": {
-		"@types/react": "^17.0.40",
-		"tsup": "^5.12.1",
-		"typescript": "^4.6.2"
+		"@types/react": "^18.2.31",
+		"tsup": "^7.2.0",
+		"typescript": "^5.2.2"
 	},
 	"peerDependencies": {
 		"react": "*"
-	},
-	"dependencies": {
-		"urlcat": "^2.0.4"
 	}
 }

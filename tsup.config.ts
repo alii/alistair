@@ -1,19 +1,16 @@
 import {defineConfig} from 'tsup';
 
+const year = new Date().getFullYear();
+
 export default defineConfig({
-	entry: [
-		'src/id/index.ts',
-		'src/prettier/index.json',
-		'src/hooks/index.ts',
-		'src/api-client/index.ts',
-		'src/index.ts',
-	],
+	entry: ['./src/index.ts', './src/id/index.ts', './src/hooks/index.ts'],
 	splitting: true,
 	clean: true,
-	format: ['cjs', 'esm'],
+	format: ['esm', 'cjs'],
 	dts: true,
-
+	treeshake: 'smallest',
 	banner: {
-		js: '// Copyright Alistair Smith https://github.com/alii/alistair',
+		js: `// Copyright ${year} Alistair Smith https://github.com/alii/alistair`,
+		css: `/* Copyright ${year} Alistair Smith https://github.com/alii/alistair */`,
 	},
 });

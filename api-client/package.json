@@ -1,5 +1,0 @@
-{
-	"main": "../dist/api-client/index.js",
-	"module": "../dist/api-client/index.mjs",
-	"typings": "../dist/api-client/index.d.ts"
-}

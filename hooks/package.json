@@ -1,5 +1,0 @@
-{
-	"main": "../dist/hooks/index.js",
-	"module": "../dist/hooks/index.mjs",
-	"typings": "../dist/hooks/index.d.ts"
-}

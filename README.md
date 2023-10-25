@@ -1,5 +1,3 @@
-# Website repository moved! [github.com/alii/website](https://github.com/alii/website)
-
 # alistair
 
 A collection of utility functions to share across projects.
@@ -41,19 +39,22 @@ A collection of pure utility React hooks that may be useful in your projects.
 #### Declarations:
 
 ```ts
+// use-local-storage
+function useLocalStorage<T>(key: string, init: () => T): [value: T, set: (action: React.SetStateAction<T>) => void];
+
 // use-throttle
 function useThrottle<T>(value: T, limit?: number): T;
 
 // use-toggle
-function useToggle(initialState?: boolean): readonly [
-	boolean,
-	{
-		readonly on: () => void;
-		readonly off: () => void;
-		readonly toggle: () => void;
-		readonly reset: () => void;
-	},
+function useToggle(
+	initialState?: boolean,
+) [
+	enabled: boolean,
+	control: {on: () => void; off: () => void; toggle: () => void; reset: () => void},
 ];
+
+// use-is-tab-focused
+function useIsTabFocused(): boolean;
 
 // use-lazy-ref
 function useLazyRef<T>(init: () => T): T;

@@ -3,7 +3,7 @@ import {defineConfig} from 'tsup';
 const year = new Date().getFullYear();
 
 export default defineConfig({
-	entry: ['./src/index.ts', './src/id/index.ts', './src/hooks/index.ts'],
+	entry: ['./src/index.ts', './src/id/index.ts', './src/hooks/index.ts', './src/http/index.ts'],
 	splitting: true,
 	clean: true,
 	format: ['esm', 'cjs'],

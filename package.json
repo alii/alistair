@@ -24,6 +24,10 @@
 			"import": "./dist/id/index.js",
 			"require": "./dist/id/index.cjs"
 		},
+		"./http": {
+			"import": "./dist/http/index.js",
+			"require": "./dist/http/index.cjs"
+		},
 		"./hooks": {
 			"import": "./dist/hooks/index.js",
 			"require": "./dist/hooks/index.cjs"

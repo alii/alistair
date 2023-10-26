@@ -15,15 +15,13 @@ export interface ToggleControl {
  * const [isOpen, {toggle}] = useToggle();
  * return <button onClick={toggle}>Toggle Something</button>;
  */
-export function useToggle(
-	initialState = false,
-): [enabled: boolean, control: ToggleControl] {
+export function useToggle(initialState = false): [enabled: boolean, control: ToggleControl] {
 	const [state, setState] = useState(initialState);
 
 	const handlers: ToggleControl = {
 		on: useCallback(() => setState(true), []),
 		off: useCallback(() => setState(false), []),
-		toggle: useCallback(() => setState(!state), [state]),
+		toggle: useCallback(() => setState(state => !state), []),
 		reset: useCallback(() => setState(initialState), [initialState]),
 	};
 

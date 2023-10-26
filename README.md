@@ -53,7 +53,7 @@ export function useToggle(
 
 export function useIsTabFocused(): boolean;
 
-export function useLazyRef<T>(init: () => T): T;
+export function useIsOnline(): void;
 
 export function useLazyRef<T>(init: () => T): T;
 

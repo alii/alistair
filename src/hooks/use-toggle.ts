@@ -23,7 +23,7 @@ export function useToggle(
 	const handlers: ToggleControl = {
 		on: useCallback(() => setState(true), []),
 		off: useCallback(() => setState(false), []),
-		toggle: useCallback(() => setState(!state), [state]),
+		toggle: useCallback(() => setState(state => !state), [state]),
 		reset: useCallback(() => setState(initialState), [initialState]),
 	};
 

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from 'react';
 
 /**
  * Use a value from local storage, with a setter. Will trigger updates wherever the same key is used around your app, and even works cross tab.
@@ -38,14 +38,14 @@ import React, {useCallback, useEffect, useState} from 'react';
 export function useLocalStorage<T>(
 	key: string,
 	init: () => T,
-): [value: T, set: React.Dispatch<React.SetStateAction<T>>] {
-	const stableInit = React.useRef(init);
+): [value: T, set: Dispatch<SetStateAction<T>>] {
+	const stableInit = useRef(init);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		stableInit.current = init;
 	}, [init]);
 
-	const write = React.useCallback(
+	const write = useCallback(
 		(value: T) => {
 			window.localStorage.setItem(key, JSON.stringify(value));
 			return value;
@@ -53,7 +53,7 @@ export function useLocalStorage<T>(
 		[key],
 	);
 
-	const getOrInit = React.useCallback(() => {
+	const getOrInit = useCallback(() => {
 		if (typeof window === 'undefined') {
 			return stableInit.current();
 		}
@@ -88,7 +88,7 @@ export function useLocalStorage<T>(
 		};
 	}, []);
 
-	const set = React.useCallback(
+	const set = useCallback(
 		(action: React.SetStateAction<T>) => {
 			const current = getOrInit();
 

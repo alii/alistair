@@ -1,3 +1,4 @@
+// tsup inlines the version at build time
 import {version} from '../../package.json';
 import {IS_BROWSER} from '../constants.ts';
 import {isBodyInit, join} from './utils.ts';

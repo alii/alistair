@@ -6,7 +6,7 @@ export const http = createHTTPClient({
 	// The base property is required
 	base: 'https://httpbin.org',
 
-	// Specifying a transform is optional, by the default does the same as below
+	// Specifying a transform is optional, but the default does the same as below
 	transform: async (response: Response) => response.json(),
 
 	// Lifecycle, and any lifecycle functions are all optional, however do note that

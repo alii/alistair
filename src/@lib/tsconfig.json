@@ -11,7 +11,11 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"allowImportingTsExtensions": true
+		"allowImportingTsExtensions": true,
+		"baseUrl": ".",
+		"paths": {
+			"@hooks/*": ["src/hooks/*"]
+		}
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": ["**/*.ts", "**/*.tsx "]

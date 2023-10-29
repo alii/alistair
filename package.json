@@ -1,65 +1,12 @@
 {
-	"name": "alistair",
-	"version": "1.5.5",
-	"repository": "https://github.com/alii/alistair",
-	"author": "Alistair Smith <hi@alistair.sh>",
-	"license": "MIT",
-	"sideEffects": false,
-	"type": "module",
 	"scripts": {
-		"build": "tsup",
-		"release": "yarn build && yarn npm publish"
+		"postinstall": "yarn workspace @alistair/lib build",
+		"dev": "npx concurrently --kill-others-on-fail ---names \"@alistair/lib,@alistair/site\" -c \"auto,auto\" \"yarn workspace @alistair/lib dev\" \"yarn workspace @alistair/site dev\""
 	},
-	"types": "./dist/index.d.cts",
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.js",
-	"exports": {
-		"./package.json": "./package.json",
-		"./prettier": "./prettier/index.json",
-		".": {
-			"import": "./dist/index.js",
-			"require": "./dist/index.cjs"
-		},
-		"./id": {
-			"import": "./dist/id/index.js",
-			"require": "./dist/id/index.cjs"
-		},
-		"./http": {
-			"import": "./dist/http/index.js",
-			"require": "./dist/http/index.cjs"
-		},
-		"./hooks": {
-			"import": "./dist/hooks/index.js",
-			"require": "./dist/hooks/index.cjs"
-		}
-	},
-	"files": [
-		"README.md",
-		"LICENSE",
-		"dist",
-		"prettier",
-		"package.json"
+	"private": true,
+	"workspaces": [
+		"src/@lib",
+		"src/@site"
 	],
-	"devDependencies": {
-		"@types/react": "^18.2.31",
-		"tsup": "^7.2.0",
-		"typescript": "^5.2.2"
-	},
-	"peerDependencies": {
-		"react": "*"
-	},
-	"keywords": [
-		"utilities",
-		"react",
-		"hooks",
-		"focused",
-		"localstorage",
-		"prettier",
-		"formatting",
-		"id"
-	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"packageManager": "yarn@4.0.0"
 }

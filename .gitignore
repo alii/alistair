@@ -5,3 +5,4 @@ dist
 !.yarn/releases
 node_modules
 .DS_Store
+site

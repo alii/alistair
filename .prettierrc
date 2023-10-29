@@ -1,1 +1,11 @@
-"./prettier/index.json"
+{
+	"$schema": "http://json.schemastore.org/prettierrc",
+	"singleQuote": true,
+	"semi": true,
+	"printWidth": 100,
+	"trailingComma": "all",
+	"arrowParens": "avoid",
+	"bracketSpacing": false,
+	"useTabs": true,
+	"quoteProps": "consistent"
+}

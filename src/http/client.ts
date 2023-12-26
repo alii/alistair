@@ -77,7 +77,7 @@ export function createHTTPClient<Transform = unknown>(userOptions: UserOptions<T
 
 	const createMethod = (method: Method) => {
 		const handler = async <T extends Transform = Transform>(
-			path: `/${string}`,
+			path: string,
 			config: RequestConfig = {},
 		): Promise<T> => {
 			const {body: userBody = undefined, headers: userHeaders, ...userInit} = config;
@@ -116,11 +116,8 @@ export function createHTTPClient<Transform = unknown>(userOptions: UserOptions<T
 				}
 			}
 
-			const defaultRequest = new Request(join(options.base, path), init);
-
-			const actualRequest = await options.lifecycle.before(defaultRequest);
-
-			const response = await run(1, actualRequest);
+			const request = await options.lifecycle.before(new Request(join(options.base, path), init));
+			const response = await run(1, request);
 
 			const transformed = await options.transform(response);
 

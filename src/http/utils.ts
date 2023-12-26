@@ -9,12 +9,12 @@ export type RequireOnly<T, K extends keyof T> = Pick<T, K> & Partial<Pick<T, Exc
 
 export function isBodyInit(body: unknown): body is Exclude<BodyInit, ArrayBufferView> {
 	return (
+		typeof body === 'string' ||
 		body instanceof ReadableStream ||
 		body instanceof Blob ||
 		body instanceof FormData ||
 		body instanceof URLSearchParams ||
-		body instanceof ArrayBuffer ||
-		typeof body === 'string'
+		body instanceof ArrayBuffer
 	);
 }
 

@@ -5,8 +5,6 @@ export function join<Base extends string, Path extends string>(base: Base, path:
 	return finalBase + finalPath;
 }
 
-export type RequireOnly<T, K extends keyof T> = Pick<T, K> & Partial<Pick<T, Exclude<keyof T, K>>>;
-
 export function isBodyInit(body: unknown): body is BodyInit {
 	return (
 		typeof body === 'string' ||
@@ -19,6 +17,6 @@ export function isBodyInit(body: unknown): body is BodyInit {
 	);
 }
 
-export function streamToBody<T>(stream: ReadableStream<T> | null) {
+export function streamToBody<T>(stream: ReadableStream<T>) {
 	return new Response(stream).text();
 }

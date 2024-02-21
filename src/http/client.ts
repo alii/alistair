@@ -27,21 +27,23 @@ export interface Lifecycle {
 	) => Promise<Request | void | undefined>;
 }
 
+export type RequestTransformer<T> = (response: Response) => Promise<T>;
+
 export interface CompleteOptions<Transform> {
 	base: string;
-	transform: (response: Response) => Promise<Transform>;
+	transform: RequestTransformer<Transform>;
 	lifecycle: Lifecycle;
 }
 
-export interface UserOptions<Transform> {
+export interface RootOptions<Transform> {
 	base: string;
-	transform?: CompleteOptions<Transform>['transform'];
+	transform?: RequestTransformer<Transform>;
 	lifecycle?: Partial<Lifecycle>;
 }
 
 export type RequestConfig = Omit<RequestInit, 'method' | 'body'> & {body?: unknown};
 
-export function createHTTPClient<Transform = unknown>(userOptions: UserOptions<Transform>) {
+export function createHTTPClient<Transform = unknown>(rootOptions: RootOptions<Transform>) {
 	const defaultLifecycle: Lifecycle = {
 		before: async req => req,
 		failure: async (count, request, response) => {
@@ -51,10 +53,10 @@ export function createHTTPClient<Transform = unknown>(userOptions: UserOptions<T
 
 	const options: CompleteOptions<Transform> = {
 		transform: res => res.json(),
-		...userOptions,
+		...rootOptions,
 		lifecycle: {
 			...defaultLifecycle,
-			...userOptions.lifecycle,
+			...rootOptions.lifecycle,
 		},
 	};
 
@@ -107,7 +109,7 @@ export function createHTTPClient<Transform = unknown>(userOptions: UserOptions<T
 					}
 
 					init.body = JSON.stringify(userBody);
-				} else if (isBodyInit(userBody)) {
+				} else if (userBody === null || isBodyInit(userBody)) {
 					init.body = userBody;
 				} else {
 					throw new Error(

@@ -7,14 +7,15 @@ export function join<Base extends string, Path extends string>(base: Base, path:
 
 export type RequireOnly<T, K extends keyof T> = Pick<T, K> & Partial<Pick<T, Exclude<keyof T, K>>>;
 
-export function isBodyInit(body: unknown): body is Exclude<BodyInit, ArrayBufferView> {
+export function isBodyInit(body: unknown): body is BodyInit {
 	return (
 		typeof body === 'string' ||
 		body instanceof ReadableStream ||
 		body instanceof Blob ||
 		body instanceof FormData ||
 		body instanceof URLSearchParams ||
-		body instanceof ArrayBuffer
+		(typeof ArrayBuffer !== 'undefined' &&
+			(ArrayBuffer.isView(body) || body instanceof ArrayBuffer))
 	);
 }
 

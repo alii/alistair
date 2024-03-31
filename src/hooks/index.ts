@@ -1,3 +1,4 @@
+export * from './use-async-function.ts';
 export * from './use-event.ts';
 export * from './use-interval.ts';
 export * from './use-is-online.ts';

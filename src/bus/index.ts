@@ -1,8 +1,8 @@
-export type Listener<P extends Record<string, unknown>, Key extends keyof P> = (
-	data: P[Key],
+export type Listener<P extends Record<string, readonly unknown[]>, Key extends keyof P> = (
+	...args: P[Key]
 ) => unknown;
 
-export class EventBus<Payloads extends Record<string, unknown> = {}> {
+export class EventBus<Payloads extends Record<string, readonly unknown[]> = {}> {
 	private readonly listeners: Map<keyof Payloads, Array<Listener<Payloads, keyof Payloads>>>;
 
 	public constructor() {
@@ -38,7 +38,7 @@ export class EventBus<Payloads extends Record<string, unknown> = {}> {
 		}
 	}
 
-	public emit<K extends keyof Payloads>(key: K, data: Payloads[K]) {
+	public emit<K extends keyof Payloads>(key: K, ...args: Payloads[K]) {
 		const listeners = this.listeners.get(key);
 
 		if (!listeners) {
@@ -46,7 +46,7 @@ export class EventBus<Payloads extends Record<string, unknown> = {}> {
 		}
 
 		for (const listener of listeners) {
-			listener(data);
+			listener(...args);
 		}
 	}
 }

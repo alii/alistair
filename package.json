@@ -1,6 +1,6 @@
 {
 	"name": "alistair",
-	"version": "1.7.0",
+	"version": "1.8.0",
 	"repository": "https://github.com/alii/alistair",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
@@ -31,6 +31,10 @@
 		"./hooks": {
 			"import": "./dist/hooks/index.js",
 			"require": "./dist/hooks/index.cjs"
+		},
+		"./bus": {
+			"import": "./dist/bus/index.js",
+			"require": "./dist/bus/index.cjs"
 		}
 	},
 	"files": [

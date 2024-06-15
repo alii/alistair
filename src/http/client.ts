@@ -18,8 +18,50 @@ export class HTTPClientError extends Error {
 	}
 }
 
+/**
+ * Lifecycle describes a `.before()` and a `.failure()` function, which allow the developer
+ * to write advanced behaviours like backoff retries, automatic authorization header injection,
+ * easy rate limiting, etc
+ */
 export interface Lifecycle {
+	/**
+	 * Runs before every request, allows you to inject headers, modifiy the request, etc.
+	 * It is safe to mutate the request that is passed in, or return a new instance of a Request.
+	 *
+	 * Note: If you implement retries with `.failure`, then `.before` will NOT be called on each
+	 * retry. This is because it's possible to return the same request in the failure handler
+	 * which would be a request that has *already had* the `.before()` transform applied (and so)
+	 * `.before()` would be changing things that have already been changed.
+	 *
+	 * @param request The request that is about to be executed
+	 * @returns A modified OR entirely new request instance
+	 */
 	before: (request: Request) => Promise<Request>;
+
+	/**
+	 * Called when a request fails (dictated when response.ok = false)
+	 *
+	 * You can do one of three things inside of this function:
+	 * - 1. Return the existing instance, or a new instance of a Request, which will queue up a
+	 *      retry with the (and if it fails AGAIN, the count will be incremented for
+	 *      the next failure call). You can use this behaviour to implement retries with
+	 *      backoff strategies.
+	 *
+	 *      Be aware that returning a request here will NOT
+	 *      pass it through `.before()`, so make sure any transformations are applied beforehand.
+	 *
+	 *      Also, it is totally okay to wait inside of .failure in the case of a rate limit for example
+	 *
+	 * - 2. Return undefined, which will throw the default HTTPClientError with the
+	 *      request and response that failed. This won't trigger any retries and will cause the original
+	 *      call to fail
+	 *
+	 * - 3. Throw an error, which won't trigger any retries and will also cause the original call to fail
+	 *
+	 * @param count - The number of times the request has failed
+	 * @param request - The request that failed
+	 * @param response - The response from the failed request
+	 */
 	failure: (
 		count: number,
 		request: Request,

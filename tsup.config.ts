@@ -9,6 +9,7 @@ export default defineConfig({
 		'./src/hooks/index.ts',
 		'./src/http/index.ts',
 		'./src/bus/index.ts',
+		'./src/atoms/index.ts',
 	],
 	splitting: true,
 	clean: true,

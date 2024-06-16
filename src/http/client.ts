@@ -85,7 +85,44 @@ export interface RootOptions<Transform> {
 
 export type RequestConfig = Omit<RequestInit, 'method' | 'body'> & {body?: unknown};
 
-export function createHTTPClient<Transform = unknown>(rootOptions: RootOptions<Transform>) {
+/**
+ * This type is just what createHTTPClient returns, you can use this if you want to type
+ * a class property or a variable or something, rather than doing `ReturnType<typeof createHTTPClient>`
+ */
+export interface HTTPClient<Transform> {
+	get: <T extends Transform = Transform>(
+		path: string,
+		config?: RequestConfig | undefined,
+	) => Promise<T>;
+	post: <T extends Transform = Transform>(
+		path: string,
+		config?: RequestConfig | undefined,
+	) => Promise<T>;
+	put: <T extends Transform = Transform>(
+		path: string,
+		config?: RequestConfig | undefined,
+	) => Promise<T>;
+	patch: <T extends Transform = Transform>(
+		path: string,
+		config?: RequestConfig | undefined,
+	) => Promise<T>;
+	delete: <T extends Transform = Transform>(
+		path: string,
+		config?: RequestConfig | undefined,
+	) => Promise<T>;
+	head: <T extends Transform = Transform>(
+		path: string,
+		config?: RequestConfig | undefined,
+	) => Promise<T>;
+	options: <T extends Transform = Transform>(
+		path: string,
+		config?: RequestConfig | undefined,
+	) => Promise<T>;
+}
+
+export function createHTTPClient<Transform = unknown>(
+	rootOptions: RootOptions<Transform>,
+): HTTPClient<Transform> {
 	const defaultLifecycle: Lifecycle = {
 		before: async req => req,
 		failure: async (count, request, response) => {

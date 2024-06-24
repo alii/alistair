@@ -13,6 +13,10 @@ export class EventBus<Payloads extends Record<string, readonly unknown[]> = {}> 
 		const existing = this.listeners.get(key) ?? [];
 		const merged = [...existing, listener] as Array<Listener<Payloads, keyof Payloads>>;
 		this.listeners.set(key, merged);
+
+		return () => {
+			this.off(key, listener);
+		};
 	}
 
 	public off<K extends keyof Payloads>(key: K, listener: Listener<Payloads, K>) {

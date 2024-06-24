@@ -6,10 +6,10 @@ import {isBodyInit, join} from './utils.ts';
 export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options';
 
 export class HTTPClientError extends Error {
-	public static getErrorMessage = (count: number, response: Response) =>
+	public static readonly getErrorMessage = (count: number, response: Response) =>
 		`Request failed after ${count} tries with status ${response.status}`;
 
-	constructor(
+	public constructor(
 		public readonly count: number,
 		public readonly request: Request,
 		public readonly response: Response,
@@ -85,51 +85,27 @@ export interface RootOptions<Transform> {
 
 export type RequestConfig = Omit<RequestInit, 'method' | 'body'> & {body?: unknown};
 
+export type MethodHandler<Transform> = <T extends Transform = Transform>(
+	path: string,
+	config?: RequestConfig | undefined,
+) => Promise<T>;
+
+export const defaultLifecycle: Lifecycle = {
+	before: async req => req,
+	failure: async (count, request, response) => {
+		throw new HTTPClientError(count, request, response);
+	},
+};
+
 /**
  * This type is just what createHTTPClient returns, you can use this if you want to type
  * a class property or a variable or something, rather than doing `ReturnType<typeof createHTTPClient>`
  */
-export interface HTTPClient<Transform> {
-	get: <T extends Transform = Transform>(
-		path: string,
-		config?: RequestConfig | undefined,
-	) => Promise<T>;
-	post: <T extends Transform = Transform>(
-		path: string,
-		config?: RequestConfig | undefined,
-	) => Promise<T>;
-	put: <T extends Transform = Transform>(
-		path: string,
-		config?: RequestConfig | undefined,
-	) => Promise<T>;
-	patch: <T extends Transform = Transform>(
-		path: string,
-		config?: RequestConfig | undefined,
-	) => Promise<T>;
-	delete: <T extends Transform = Transform>(
-		path: string,
-		config?: RequestConfig | undefined,
-	) => Promise<T>;
-	head: <T extends Transform = Transform>(
-		path: string,
-		config?: RequestConfig | undefined,
-	) => Promise<T>;
-	options: <T extends Transform = Transform>(
-		path: string,
-		config?: RequestConfig | undefined,
-	) => Promise<T>;
-}
+export type HTTPClient<Transform> = Record<Method, MethodHandler<Transform>>;
 
 export function createHTTPClient<Transform = unknown>(
 	rootOptions: RootOptions<Transform>,
 ): HTTPClient<Transform> {
-	const defaultLifecycle: Lifecycle = {
-		before: async req => req,
-		failure: async (count, request, response) => {
-			throw new HTTPClientError(count, request, response);
-		},
-	};
-
 	const options: CompleteOptions<Transform> = {
 		transform: res => res.json(),
 		...rootOptions,
@@ -156,8 +132,8 @@ export function createHTTPClient<Transform = unknown>(
 		return response;
 	};
 
-	const createMethod = (method: Method) => {
-		const handler = async <T extends Transform = Transform>(
+	const createMethod = (method: Method): MethodHandler<Transform> => {
+		return async <T extends Transform = Transform>(
 			path: string,
 			config: RequestConfig = {},
 		): Promise<T> => {
@@ -204,8 +180,6 @@ export function createHTTPClient<Transform = unknown>(
 
 			return transformed as T;
 		};
-
-		return handler;
 	};
 
 	return {

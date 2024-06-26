@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 import {useEvent} from './use-event';
 
 export type UseAsyncFunctionState<R> = {
@@ -35,18 +35,22 @@ export function useAsyncFunction<A extends unknown[], R>(
 ): [
 	state: UseAsyncFunctionState<R>,
 	run: (...args: A) => Promise<UseAsyncFunctionState<R>['result']>,
+	reset: () => void,
 ] {
 	const [state, setState] = useState<UseAsyncFunctionState<R>>({
 		loading: false,
 		result: {type: 'initial'},
 	});
 
+	const isInFlight = useRef(false);
+
 	const run = useEvent(async (...args: A) => {
-		if (state.loading) {
+		if (isInFlight.current) {
 			throw new Error('Cannot execute while currently in flight');
 		}
 
 		setState(old => ({...old, loading: true}));
+		isInFlight.current = true;
 
 		try {
 			const data = await execute(...args);
@@ -76,8 +80,19 @@ export function useAsyncFunction<A extends unknown[], R>(
 				type: 'error' as const,
 				error,
 			};
+		} finally {
+			// finally clause runs before try/catch return
+			// See: https://www.typescriptlang.org/play/?#code/MYewdgzgLgBAhjAvDAFASiQPhgbwFAyExQBOAnrgUdQJYBmqAsnFABYB0JcYAJiALboY2AAzsArBnzUZRNiRAB3GGACmygKIkFJFAHIAMgBsQRvWgDcVWQF881mSVVQAriTAwARKTKer1GxhgFmBWSllCJ1d3L2CoUL8HQLoaMDgjIwppCNBIU1V2EwBzFE8AMVT0zJguME9LJLw7PFyIfMKQErh0SyA
+			isInFlight.current = false;
 		}
 	});
 
-	return [state, run];
+	const reset = useCallback(() => {
+		setState({
+			loading: false,
+			result: {type: 'initial'},
+		});
+	}, []);
+
+	return [state, run, reset];
 }

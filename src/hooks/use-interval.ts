@@ -5,7 +5,14 @@ import {useEffect, useRef} from 'react';
  * @param callback A callback to run on a set interval
  * @param delay The interval between each tick
  */
-export function useInterval(callback: () => void, delay: number | null) {
+export function useInterval(
+	callback: () => void,
+	delay: number | null,
+	options?: {
+		runImmediately?: boolean;
+	},
+) {
+	const runImmediately = options?.runImmediately ?? false;
 	const savedCallback = useRef(callback);
 
 	useEffect(() => {
@@ -22,6 +29,10 @@ export function useInterval(callback: () => void, delay: number | null) {
 		};
 
 		const id = setInterval(tick, delay);
+
+		if (runImmediately) {
+			tick();
+		}
 
 		return () => {
 			clearInterval(id);

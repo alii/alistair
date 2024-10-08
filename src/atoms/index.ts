@@ -1,7 +1,16 @@
-import {useEffect, useMemo, useSyncExternalStore, type Dispatch, type SetStateAction} from 'react';
+import {
+	DependencyList,
+	MutableRefObject,
+	useCallback,
+	useEffect,
+	useMemo,
+	useSyncExternalStore,
+	type Dispatch,
+	type SetStateAction,
+} from 'react';
 import {useEvent} from '../hooks/use-event';
 
-export interface Atom<T, W> {
+export interface Atom<out T, in out W> {
 	/**
 	 * Gets a value from the atom
 	 * @returns The current value of the atom
@@ -182,14 +191,35 @@ export function useAtomDidChange<T, W>(atom: Atom<T, W>, callback: (value: T) =>
  * @param selector The selector function
  * @returns The selected value
  */
-export function useSelectAtomValue<T, W, U>(atom: Atom<T, W>, selector: (atom: T) => U): U {
-	const stable = useEvent(selector);
-
-	return useSyncExternalStore(
-		atom.subscribe,
-		() => stable(atom.get()),
-		() => stable(atom.get()),
+export function useSelectAtomValue<T, W, U>(
+	atom: Atom<T, W>,
+	selector: (atom: T) => U,
+	dependencies: DependencyList = [],
+): U {
+	const cache = useMemo<MutableRefObject<[state: T, result: U] | null>>(
+		() => ({current: null}),
+		[atom, ...dependencies],
 	);
+
+	const subscribe = useCallback(
+		(listener: () => void) => atom.subscribe(listener),
+		[atom, ...dependencies],
+	);
+
+	const getSnapshot = () => {
+		const state = atom.get();
+
+		if (cache.current && cache.current[0] === state) {
+			return cache.current[1];
+		}
+
+		const next = selector(state);
+		cache.current = [state as Exclude<T, WeakKey>, next];
+
+		return next;
+	};
+
+	return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 }
 
 /**
@@ -198,6 +228,8 @@ export function useSelectAtomValue<T, W, U>(atom: Atom<T, W>, selector: (atom: T
  * Warning: You shouldn't use this if your mapped value is a primitive as this hook is more expensive to
  * use than `useSelectAtomValue`. Returning a primitive is safe to do  with `useSelectAtomValue` because
  * primitives are always stable.
+ *
+ * @deprecated It's now recommended to use `useSelectAtomValue` instead
  *
  * @param atom The atom to select a value from
  * @param selector The selector function

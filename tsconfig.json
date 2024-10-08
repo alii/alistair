@@ -11,7 +11,8 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
-		"allowImportingTsExtensions": true
+		"allowImportingTsExtensions": true,
+		"jsx": "react-jsx"
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": ["**/*.ts", "**/*.tsx "]

@@ -7,6 +7,7 @@ export default defineConfig({
 		'./src/index.ts',
 		'./src/id/index.ts',
 		'./src/hooks/index.ts',
+		'./src/react/index.ts',
 		'./src/http/index.ts',
 		'./src/bus/index.ts',
 		'./src/atoms/index.ts',

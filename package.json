@@ -1,6 +1,6 @@
 {
 	"name": "alistair",
-	"version": "1.13.0-beta.1",
+	"version": "1.13.0-beta.2",
 	"repository": "https://github.com/alii/alistair",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
@@ -43,6 +43,10 @@
 		"./atoms": {
 			"import": "./dist/atoms/index.js",
 			"require": "./dist/atoms/index.cjs"
+		},
+		"./structs": {
+			"import": "./dist/structs/index.js",
+			"require": "./dist/structs/index.cjs"
 		}
 	},
 	"files": [

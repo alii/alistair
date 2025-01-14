@@ -12,6 +12,7 @@ export default defineConfig({
 		'./src/bus/index.ts',
 		'./src/atoms/index.ts',
 		'./src/structs/index.ts',
+		'./src/tags/index.ts',
 	],
 	splitting: true,
 	clean: true,

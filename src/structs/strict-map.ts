@@ -48,19 +48,19 @@ export class StrictMap<K, V> {
 		return this;
 	}
 
-	entries(): MapIterator<[K, V]> {
+	entries(): IterableIterator<[K, V]> {
 		return this.map.entries();
 	}
 
-	keys(): MapIterator<K> {
+	keys(): IterableIterator<K> {
 		return this.map.keys();
 	}
 
-	values(): MapIterator<V> {
+	values(): IterableIterator<V> {
 		return this.map.values();
 	}
 
-	[Symbol.iterator](): MapIterator<[K, V]> {
+	[Symbol.iterator](): IterableIterator<[K, V]> {
 		return this.map[Symbol.iterator]();
 	}
 }

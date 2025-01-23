@@ -1,6 +1,6 @@
 {
 	"name": "alistair",
-	"version": "1.14.0",
+	"version": "1.14.1",
 	"repository": "https://github.com/alii/alistair",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
@@ -53,8 +53,8 @@
 			"require": "./dist/tags/index.cjs"
 		},
 		"./log": {
-			"import": "./dist/tags/index.js",
-			"require": "./dist/tags/index.cjs"
+			"import": "./dist/log/index.js",
+			"require": "./dist/log/index.cjs"
 		}
 	},
 	"files": [

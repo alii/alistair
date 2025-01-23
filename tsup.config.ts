@@ -13,6 +13,7 @@ export default defineConfig({
 		'./src/atoms/index.ts',
 		'./src/structs/index.ts',
 		'./src/tags/index.ts',
+		'./src/log/index.ts',
 	],
 	splitting: true,
 	clean: true,

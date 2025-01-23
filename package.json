@@ -1,6 +1,6 @@
 {
 	"name": "alistair",
-	"version": "1.13.0",
+	"version": "1.14.0",
 	"repository": "https://github.com/alii/alistair",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
@@ -51,6 +51,10 @@
 		"./tags": {
 			"import": "./dist/tags/index.js",
 			"require": "./dist/tags/index.cjs"
+		},
+		"./log": {
+			"import": "./dist/tags/index.js",
+			"require": "./dist/tags/index.cjs"
 		}
 	},
 	"files": [
@@ -81,5 +85,9 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"packageManager": "yarn@4.5.0"
+	"packageManager": "yarn@4.5.0",
+	"dependencies": {
+		"@types/node": "^22.10.10",
+		"colorette": "^2.0.20"
+	}
 }

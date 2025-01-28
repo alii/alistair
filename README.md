@@ -165,8 +165,7 @@ const client = createHTTPClient({
 // Available methods: get, post, put, patch, delete, head, options
 const data = await client.get('/users');
 const response = await client.post('/users', {
-	body: {name: 'John'},
-	headers: {'Content-Type': 'application/json'},
+	body: {name: 'John'}, // Assumes JSON by default, specify Content-Type header to change
 });
 ```
 

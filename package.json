@@ -1,6 +1,6 @@
 {
 	"name": "alistair",
-	"version": "1.14.1",
+	"version": "1.14.2",
 	"repository": "https://github.com/alii/alistair",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
@@ -8,7 +8,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "tsup",
-		"release": "yarn build && yarn npm publish"
+		"release": "bun run build && bun publish"
 	},
 	"types": "./dist/index.d.cts",
 	"main": "./dist/index.cjs",

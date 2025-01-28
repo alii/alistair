@@ -77,12 +77,6 @@ export interface CompleteOptions<Transform> {
 	lifecycle: Lifecycle;
 }
 
-export interface RootOptions<Transform> {
-	base: string;
-	transform?: RequestTransformer<Transform>;
-	lifecycle?: Partial<Lifecycle>;
-}
-
 export type RequestConfig = Omit<RequestInit, 'method' | 'body'> & {body?: unknown};
 
 export type MethodHandler<Transform> = <T extends Transform = Transform>(
@@ -103,9 +97,11 @@ export const defaultLifecycle: Lifecycle = {
  */
 export type HTTPClient<Transform> = Record<Method, MethodHandler<Transform>>;
 
-export function createHTTPClient<Transform = unknown>(
-	rootOptions: RootOptions<Transform>,
-): HTTPClient<Transform> {
+export function createHTTPClient<Transform = unknown>(rootOptions: {
+	base: string;
+	transform?: RequestTransformer<Transform>;
+	lifecycle?: Partial<Lifecycle>;
+}): HTTPClient<Transform> {
 	const options: CompleteOptions<Transform> = {
 		transform: res => res.json(),
 		...rootOptions,

@@ -1,9 +1,7 @@
 import {
 	DependencyList,
-	MutableRefObject,
 	useCallback,
 	useEffect,
-	useMemo,
 	useSyncExternalStore,
 	type Dispatch,
 	type SetStateAction,
@@ -176,90 +174,42 @@ export function useAtomDidChange<T, W>(atom: Atom<T, W>, callback: (value: T) =>
 /**
  * Selects/computes a value from an atom, and re-renders the component when the selected value changes
  *
- * The selector function can be unstable, but the value it returns must be stable. This means you could do something like this
+ * The selector function can be unstable, but the value it returns should be stable. This means you could do something like this
  * `const totalMessages = useSelectAtomValue(chatAtom, chat => chat.messages.length);`
  *
  * Or this is also okay, because you're not computing a new value, just selecting a value from the atom:
  * `const message = useSelectAtomValue(chatAtom, chat => chat.messages);`
  *
- * But NOT this, because the message array will be "new" every time the selector is called:
+ * But NOT this, because we make a new array every time the selector is called (which will trigger a re-render):
  * `const totalMessages = useSelectAtomValue(chatAtom, chat => [...chat.messages, "hello"]);`
  *
- * If you need to do something like that, you should use the `useSelectAtomValueAndMap` hook, which allows you to map the selected value to a new value and memoize it.
+ * If you need this kind of behaviour, you should use this in combination with `useMemo`:
+ *
+ * ```ts
+ * const messages = useSelectAtomValue(chatAtom, chat => chat.messages);
+ * const mappedMessages = useMemo(() => [...messages, "hello"], [messages]);
+ * ```
  *
  * @param atom The atom to select a value from-inherited from the atom
  * @param selector The selector function
  * @returns The selected value
+ *
+ * @example
+ * ```ts
+ * const messages = useSelectAtomValue(chatAtom, chat => chat.messages);
+ * console.log('messages', messages);
+ * ```
  */
 export function useSelectAtomValue<T, W, U>(
 	atom: Atom<T, W>,
 	selector: (atom: T) => U,
 	dependencies: DependencyList = [],
 ): U {
-	const cache = useMemo<MutableRefObject<[state: T, result: U] | null>>(
-		() => ({current: null}),
-		[atom, ...dependencies],
-	);
-
 	const subscribe = useCallback(
-		(listener: () => void) => atom.subscribe(listener),
+		(notify: () => void) => atom.subscribe(notify),
 		[atom, ...dependencies],
 	);
 
-	const getSnapshot = () => {
-		const state = atom.get();
-
-		if (cache.current && cache.current[0] === state) {
-			return cache.current[1];
-		}
-
-		const next = selector(state);
-		cache.current = [state as Exclude<T, WeakKey>, next];
-
-		return next;
-	};
-
+	const getSnapshot = () => selector(atom.get());
 	return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
-}
-
-/**
- * Selects a value from an atom, and maps it to a new value
- *
- * Warning: You shouldn't use this if your mapped value is a primitive as this hook is more expensive to
- * use than `useSelectAtomValue`. Returning a primitive is safe to do  with `useSelectAtomValue` because
- * primitives are always stable.
- *
- * @deprecated It's now recommended to use `useSelectAtomValue` instead
- *
- * @param atom The atom to select a value from
- * @param selector The selector function
- * @param mapper The mapper function
- * @returns The mapped value
- *
- * @example
- * ```ts
- * // This will only trigger a rerender when `chat.messages` changes. When it does change,
- * // the mapped value will be re-computed, and then returned. It will stay stable and not change
- * // on subsequent renders until `chat.messages` changes again. This means it is safe
- * // to use in a `useMemo` or `useEffect` dependency array.
- * const messagesWithHello = useSelectAtomValueAndMap(
- * 	chatAtom,
- *
- * 	// Only rerender when `chat.messages` changes...
- * 	chat => chat.messages,
- *
- * 	// ...and when it does, map the messages to include "hello" at the end
- * 	messages => [...messages, "hello"],
- * );
- * ```
- */
-export function useSelectAtomValueAndMap<A, T, O, M>(
-	atom: Atom<A, T>,
-	selector: (atom: A) => O,
-	mapper: (selected: O) => M,
-) {
-	const selected = useSelectAtomValue(atom, selector);
-	const stableMapper = useEvent(mapper);
-
-	return useMemo(() => stableMapper(selected), [selected]);
 }

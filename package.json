@@ -1,11 +1,21 @@
 {
 	"name": "alistair",
-	"version": "1.14.2",
-	"repository": "https://github.com/alii/alistair",
+	"version": "1.14.3",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
 	"sideEffects": false,
 	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/alii/alistair.git"
+	},
+	"homepage": "https://github.com/alii/alistair#readme",
+	"bugs": {
+		"url": "https://github.com/alii/alistair/issues"
+	},
+	"sponsor": {
+		"url": "https://github.com/sponsors/alii"
+	},
 	"scripts": {
 		"build": "tsup",
 		"release": "bun run build && bun publish"

@@ -7,7 +7,7 @@ export type Method = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'opt
 
 export class HTTPClientError extends Error {
 	public static readonly getErrorMessage = (count: number, response: Response) =>
-		`Request failed after ${count} tries with status ${response.status}`;
+		`Request failed after ${count} attempts with status ${response.status}`;
 
 	public constructor(
 		public readonly count: number,

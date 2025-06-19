@@ -14,6 +14,7 @@ export default defineConfig({
 		'./src/structs/index.ts',
 		'./src/tags/index.ts',
 		'./src/log/index.ts',
+		'./src/match/index.ts',
 	],
 	splitting: true,
 	clean: true,

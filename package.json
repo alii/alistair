@@ -1,6 +1,6 @@
 {
 	"name": "alistair",
-	"version": "1.14.4",
+	"version": "1.15.0",
 	"author": "Alistair Smith <hi@alistair.sh>",
 	"license": "MIT",
 	"sideEffects": false,
@@ -65,6 +65,10 @@
 		"./log": {
 			"import": "./dist/log/index.js",
 			"require": "./dist/log/index.cjs"
+		},
+		"./match": {
+			"import": "./dist/match/index.js",
+			"require": "./dist/match/index.cjs"
 		}
 	},
 	"files": [
@@ -75,6 +79,7 @@
 		"package.json"
 	],
 	"devDependencies": {
+		"@types/bun": "^1.2.16",
 		"@types/react": "^19.0.7",
 		"tsup": "^8.3.5",
 		"typescript": "^5.7.3"

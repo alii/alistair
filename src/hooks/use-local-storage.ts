@@ -105,7 +105,6 @@ export function useLocalStorage<T>(
 					key,
 					oldValue: JSON.stringify(current),
 					newValue: JSON.stringify(next),
-					storageArea: window.localStorage,
 					url: window.location.href,
 				}),
 			);

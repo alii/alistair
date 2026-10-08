@@ -14,7 +14,7 @@ export function simple<
 	T,
 	K extends keyof T,
 	Options extends {
-		[Key in Extract<T[K], PropertyKey>]: (value: Extract<T, {[_ in K]: Key}>) => any;
+		[Key in Extract<T[K], PropertyKey>]: (value: Extract<T, {[_ in K]: Key}>) => unknown;
 	},
 >(value: T, key: K, options: Options) {
 	const discriminator = value[key];

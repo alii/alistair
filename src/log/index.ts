@@ -80,7 +80,7 @@ export function logger({
 
 			const string = resultArgs.join(' ');
 
-			let result: string[] = [];
+			const result: string[] = [];
 			const split = string.split('\n');
 
 			for (let i = 0; i < split.length; i++) {

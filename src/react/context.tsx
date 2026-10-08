@@ -127,9 +127,10 @@ export function createStoreContext<T>() {
 }
 
 export function useCacheSelector() {
-	const cache = useLazyRef(() => new WeakMap<{}, {} | null>());
+	const cache = useLazyRef(() => new WeakMap<object, unknown>());
 
-	return <Prev extends {}, Out extends {} | null>(compute: (prev: Prev) => Out) => {
+	// eslint-disable-next-line @typescript-eslint/no-empty-object-type -- any value except undefined
+	return <Prev extends object, Out extends {} | null>(compute: (prev: Prev) => Out) => {
 		const stable = useEvent(compute);
 
 		return react.useCallback(

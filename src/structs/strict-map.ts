@@ -63,7 +63,7 @@ export class StrictMap<K, V> {
 	 * @param callbackfn - Function to execute for each entry
 	 * @param thisArg - Value to use as `this` when executing the callback
 	 */
-	public forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any): void {
+	public forEach(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: unknown): void {
 		this.map.forEach(callbackfn, thisArg);
 	}
 

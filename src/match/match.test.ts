@@ -15,7 +15,7 @@ test('simple', () => {
 	const o: O = {
 		type: 'a',
 		foo: 'hello',
-	} as any;
+	} as O;
 
 	const result = simple(o, 'type', {
 		a: o => o.foo,

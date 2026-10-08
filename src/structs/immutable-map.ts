@@ -192,7 +192,7 @@ export class ImmutableMap<K, V> {
 	 * console.log(results); // ['a=1', 'b=2']
 	 * ```
 	 */
-	public forEach(callbackfn: (value: V, key: K) => void, thisArg?: any): void {
+	public forEach(callbackfn: (value: V, key: K) => void, thisArg?: unknown): void {
 		this.map.forEach(callbackfn, thisArg);
 	}
 

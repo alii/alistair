@@ -4,7 +4,7 @@ export type Listener<P extends Record<string, readonly unknown[]>, Key extends k
 	...args: P[Key]
 ) => unknown;
 
-export class EventBus<Payloads extends Record<string, readonly unknown[]> = {}> {
+export class EventBus<Payloads extends Record<string, readonly unknown[]> = Record<never, never>> {
 	private readonly listeners: StrictMap<keyof Payloads, Set<Listener<Payloads, keyof Payloads>>>;
 
 	public constructor() {
